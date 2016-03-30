@@ -159,6 +159,7 @@ void MainWindow::on_ok_accepted()
     ui->openglWidget->setViewerPosition(this->getViewerPosition());
 
     /*Set Light*/
+
     ui->openglWidget->setLightPosition(this->getLightPosition());
 
     pair<bool,QVector4D> diffused = this->getDiffusedParams();
@@ -174,6 +175,7 @@ void MainWindow::on_ok_accepted()
     ui->openglWidget->setSpotlight(spotlight.second,spotlight.first);
 
     //print();
+    ui->openglWidget->clearData();
     setUpIlluminationModel();
 
     ui->openglWidget->update();
@@ -188,6 +190,8 @@ void MainWindow::on_ok_rejected()
 void MainWindow::on_browseButton_clicked(){
     QString filename = QFileDialog::getOpenFileName(this,tr("Open File"),"./","Text File (*.txt);;");
     ui->inputFileText->setText(filename);
+
+    voxelMergeModel.clearData();
     voxelMergeModel.readInput(filename.toStdString());
     voxelMergeModel.merge();
 }

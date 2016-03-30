@@ -7,11 +7,17 @@ GLWidget::GLWidget(QWidget *parent) :
     yRot = 0;
     zRot = 0;
     zoomfactor = 1.0;
+    scale = 1.0;
     srand(time(NULL));
+    isLightON = true;
 }
 
 void GLWidget::setViewerPosition(QVector3D pos){
     this->viewerPosition = pos;
+}
+
+void GLWidget::setLight(bool _isLightON){
+    this->isLightON = _isLightON;
 }
 
 void GLWidget::setLightPosition(QVector4D pos){
@@ -132,14 +138,18 @@ void GLWidget::drawbox(){
     glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
     glScalef(scale,scale,scale);
-    for (int i = 0; i < 6*this->size; i++) {
+    for (int i = 0; i < 6*size; i++) {
         glBegin(GL_QUADS);
-        if(i%6==0){
-            float r = (float)rand()/RAND_MAX;
-            float g = (float)rand()/RAND_MAX;
-            float b = (float)rand()/RAND_MAX;
-            glColor3f(0.0,0.0,1.0);
+        if(i%6==0 && (int)objectColor.size()<size){
+            QVector3D v;
+            v.setX((float)rand()/RAND_MAX);
+            v.setY((float)rand()/RAND_MAX);
+            v.setZ((float)rand()/RAND_MAX);
+            objectColor.push_back(v);
         }
+        if(i%6==0)
+            glColor3f(objectColor[i/6].x(),objectColor[i/6].y(),objectColor[i/6].z());
+
         glNormal3fv(&normal[i][0]);
         glVertex3fv(&vertex[face[i][0]][0]);
         glVertex3fv(&vertex[face[i][1]][0]);
@@ -218,5 +228,28 @@ void GLWidget::wheelEvent(QWheelEvent* event){
     else
         scale = zoomfactor;
     update();
+}
+
+void GLWidget::clearData(){
+    for(int i=0;i<6*size;i++){
+        delete[] face[i];
+        delete[] normal[i];
+    }
+    delete[] face;
+    delete[] normal;
+
+    for(int i=0;i<8*size;i++){
+        delete[] vertex[i];
+    }
+    delete[] vertex;
+    size = 0;
+
+    xRot = 0;
+    yRot = 0;
+    zRot = 0;
+    zoomfactor = 1.0;
+    scale = 1.0;
+    objectColor.clear();
+
 }
 

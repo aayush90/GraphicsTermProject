@@ -38,6 +38,7 @@ public:
     VoxelMerge();
     void merge();
     void readInput(string filename);
+    void clearData();
 
 private:
     int n_cuboids;

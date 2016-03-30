@@ -31,10 +31,13 @@ public:
     void setSpecular(QVector4D,bool);
     void setSpotlight(vector<float>,bool);
     void setAmbient(QVector4D,bool);
+    void setLight(bool);
 
     void initializeGL();
     void paintGL();
     void resizeGL(int,int);
+
+    void clearData();
 
 protected:
     void mousePressEvent(QMouseEvent*);
@@ -66,12 +69,14 @@ private:
     bool isSpecular;
     bool isSpotlight;
     bool isAmbient;
+    bool isLightON;
 
     int xRot;
     int yRot;
     int zRot;
     QPoint lastPos;
-    float zoomfactor,scale=1.0;
+    float zoomfactor,scale;
+    vector<QVector3D> objectColor;
 
     void drawbox();
 

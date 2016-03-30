@@ -208,6 +208,12 @@ void VoxelMerge::merge(){
     findCuboidDimension();
 }
 
+void VoxelMerge::clearData(){
+    voxel.clear();
+    cuboid.clear();
+    n_cuboids = 0;
+}
+
 
 
 
