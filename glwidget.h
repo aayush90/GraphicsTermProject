@@ -9,6 +9,8 @@
 #include <iostream>
 #include <QPoint>
 #include <QMouseEvent>
+#include <cstdlib>
+#include <time.h>
 
 using namespace std;
 
@@ -69,7 +71,7 @@ private:
     int yRot;
     int zRot;
     QPoint lastPos;
-    float zoomfactor;
+    float zoomfactor,scale=1.0;
 
     void drawbox();
 

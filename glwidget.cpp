@@ -7,6 +7,7 @@ GLWidget::GLWidget(QWidget *parent) :
     yRot = 0;
     zRot = 0;
     zoomfactor = 1.0;
+    srand(time(NULL));
 }
 
 void GLWidget::setViewerPosition(QVector3D pos){
@@ -54,9 +55,19 @@ void GLWidget::setSpotlight(vector<float> v, bool isEnable){
 }
 
 
+QVector4D RandomNumber(){
+    QVector4D v;
+    v.setW((float)rand()/RAND_MAX);
+    v.setX((float)rand()/RAND_MAX);
+    v.setY((float)rand()/RAND_MAX);
+    v.setZ((float)rand()/RAND_MAX);
+    return v;
+}
+
+
 void GLWidget::initializeGL(){
     GLfloat mat_shininess[] = { 50.0 };
-    qglClearColor (Qt::yellow);
+    qglClearColor (Qt::black);
     glShadeModel (GL_SMOOTH);
 
     /*Spot Light*/
@@ -78,8 +89,13 @@ void GLWidget::initializeGL(){
 
     /*Specular Light*/
     if(this->isSpecular){
+        GLfloat mat_specular[] = { 1.0,1.0,1.0,1.0 };
+        glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
         glLightfv(GL_LIGHT0,GL_SPECULAR,this->specularRGBA);
     }
+
+    GLfloat mat_emission[] = {0.0,0.0,0.0,1.0};
+    glMaterialfv(GL_FRONT,GL_EMISSION,mat_emission);
 
     glLightfv(GL_LIGHT0,GL_POSITION,this->lightPosition);
 
@@ -89,42 +105,21 @@ void GLWidget::initializeGL(){
     glEnable(GL_LIGHT0);
     glEnable(GL_DEPTH_TEST);
 
-//    glMatrixMode(GL_PROJECTION);
-    //gluPerspective(50.0,1.0,1.0,10.0);
-//    glMatrixMode(GL_MODELVIEW);
+    glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
+    glEnable(GL_COLOR_MATERIAL);
 
     gluLookAt(this->viewerPosition.x(),this->viewerPosition.y(),this->viewerPosition.z(),/*eye*/
               0.0, 0.0, 0.0,/*center*/
               0.0, 1.0, 0.); /*up direction*/
-
-    /* Adjust cube position to be asthetic angle. */
-    //glTranslatef(0.0, 0.0, -1.0);
-    /*glRotatef(60, 1.0, 0.0, 0.0);
-    glRotatef(-40, 0.0, 0.0, 1.0);*/
 }
 
 void GLWidget::resizeGL(int w, int h) {
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-//    gluOrtho2D(0, w, 0, h); // set origin to bottom left corner
     gluPerspective(100.0f,(GLfloat)w/(GLfloat)h,0.1f,100.0f);
-    //glOrtho(0,w, 0,h, 0.1, 100.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-//}
-
-//    int side = min(w, h);
-//    glViewport((w - side) / 2, (h - side) / 2, side, side);
-
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-//#ifdef QT_OPENGL_ES_1
-//    glOrthof(-2, +2, -2, +2, 1.0, 15.0);
-//#else
-//    glOrtho(-2, +2, -2, +2, 1.0, 15.0);
-//#endif
-//    glMatrixMode(GL_MODELVIEW);
 }
 
 
@@ -136,11 +131,15 @@ void GLWidget::drawbox(){
     glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
     glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
-    glScalef(zoomfactor,zoomfactor,1.0);
-    //glScalef(0.5,0.5,0.5);
+    glScalef(scale,scale,scale);
     for (int i = 0; i < 6*this->size; i++) {
         glBegin(GL_QUADS);
-        glColor3f(0.5,0.5,0.5);
+        if(i%6==0){
+            float r = (float)rand()/RAND_MAX;
+            float g = (float)rand()/RAND_MAX;
+            float b = (float)rand()/RAND_MAX;
+            glColor3f(0.0,0.0,1.0);
+        }
         glNormal3fv(&normal[i][0]);
         glVertex3fv(&vertex[face[i][0]][0]);
         glVertex3fv(&vertex[face[i][1]][0]);
@@ -154,9 +153,6 @@ void GLWidget::paintGL(){
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     initializeGL();
-//    glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
-//    glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
-//    glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
     drawbox();
 }
 
@@ -217,6 +213,10 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event){
 void GLWidget::wheelEvent(QWheelEvent* event){
     int numDegrees = event->delta()/8;
     zoomfactor += numDegrees/15;
+    if(zoomfactor<0)
+        scale =1/(-zoomfactor);
+    else
+        scale = zoomfactor;
     update();
 }
 
