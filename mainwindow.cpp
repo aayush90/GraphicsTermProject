@@ -19,6 +19,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->spot_ztext->setValidator(new QDoubleValidator());
     ui->spot_exponentText->setValidator(new QDoubleValidator());
 
+    ui->spot_xtext->setEnabled(false);
+    ui->spot_ytext->setEnabled(false);
+    ui->spot_ztext->setEnabled(false);
+    ui->spot_exponentText->setEnabled(false);
+    ui->spot_cutoffSlider->setEnabled(false);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -49,10 +56,10 @@ QVector4D MainWindow::getLightPosition(){
     point.setY(ui->light_ytext->text().toFloat());
     point.setZ(ui->light_ztext->text().toFloat());
 
-    if(ui->positionalLightEnable->isChecked())
-        point.setW(1.0);
-    else
+    if(ui->directionalLightEnable->isChecked())
         point.setW(0.0);
+    else
+        point.setW(1.0);
 
     return point;
 }
@@ -128,7 +135,7 @@ pair<bool,vector<float> > MainWindow::getSpotlightParams(){
     v.push_back(ui->spot_xtext->text().toFloat());
     v.push_back(ui->spot_ytext->text().toFloat());
     v.push_back(ui->spot_ztext->text().toFloat());
-    v.push_back(ui->spot_cutoffSlider->value()/(float)ui->spot_cutoffSlider->maximum() * 80);
+    v.push_back(ui->spot_cutoffSlider->value()/(float)ui->spot_cutoffSlider->maximum() * 90);
     v.push_back(ui->spot_exponentText->text().toFloat());
 
     return make_pair(enable,v);
@@ -159,6 +166,7 @@ void MainWindow::on_ok_accepted()
     ui->openglWidget->setViewerPosition(this->getViewerPosition());
 
     /*Set Light*/
+    ui->openglWidget->setLight(!ui->disableLight->isChecked());
 
     ui->openglWidget->setLightPosition(this->getLightPosition());
 
@@ -272,5 +280,39 @@ void MainWindow::setUpIlluminationModel(){
         ui->openglWidget->vertex[i][0] = v[i][0]; ui->openglWidget->vertex[i][1] = v[i][1]; ui->openglWidget->vertex[i][2] = v[i][2];
     }
 
+
+}
+
+void MainWindow::on_spotlight_enable_toggled(bool checked){
+        ui->spot_xtext->setEnabled(checked);
+        ui->spot_ytext->setEnabled(checked);
+        ui->spot_ztext->setEnabled(checked);
+        ui->spot_exponentText->setEnabled(checked);
+        ui->spot_cutoffSlider->setEnabled(checked);
+
+}
+
+void MainWindow::on_disableLight_toggled(bool checked){
+    ui->light_xtext->setEnabled(!checked);
+    ui->light_ytext->setEnabled(!checked);
+    ui->light_ztext->setEnabled(!checked);
+    ui->ambient_Rslider->setEnabled(!checked);
+    ui->ambient_Gslider->setEnabled(!checked);
+    ui->ambient_Bslider->setEnabled(!checked);
+    ui->ambient_Aslider->setEnabled(!checked);
+    ui->ambient_enable->setChecked(!checked);
+    ui->ambient_enable->setCheckable(!checked);
+    ui->diffused_Rslider->setEnabled(!checked);
+    ui->diffused_Gslider->setEnabled(!checked);
+    ui->diffused_Bslider->setEnabled(!checked);
+    ui->diffused_Aslider->setEnabled(!checked);
+    ui->diffused_enable->setChecked(!checked);
+    ui->diffused_enable->setCheckable(!checked);
+    ui->specular_Rslider->setEnabled(!checked);
+    ui->specular_Gslider->setEnabled(!checked);
+    ui->specular_Bslider->setEnabled(!checked);
+    ui->specular_Aslider->setEnabled(!checked);
+    ui->specular_enable->setChecked(!checked);
+    ui->specular_enable->setCheckable(!checked);
 
 }

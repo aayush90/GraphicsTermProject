@@ -10,6 +10,7 @@ GLWidget::GLWidget(QWidget *parent) :
     scale = 1.0;
     srand(time(NULL));
     isLightON = true;
+    isSpotlight = isAmbient = isSpecular = isDiffused = false;
 }
 
 void GLWidget::setViewerPosition(QVector3D pos){
@@ -76,8 +77,10 @@ void GLWidget::initializeGL(){
     qglClearColor (Qt::black);
     glShadeModel (GL_SMOOTH);
 
+
     /*Spot Light*/
     if(this->isSpotlight){
+        cout<<"yes\n";
         glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION,this->spotDirection);
         glLightf(GL_LIGHT0,GL_SPOT_CUTOFF,this->spotCutOff);
         glLightf(GL_LIGHT0,GL_SPOT_EXPONENT,this->spotExponent);
@@ -113,6 +116,9 @@ void GLWidget::initializeGL(){
 
     glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
+
+    if(!isLightON)
+        glDisable(GL_LIGHTING);
 
     gluLookAt(this->viewerPosition.x(),this->viewerPosition.y(),this->viewerPosition.z(),/*eye*/
               0.0, 0.0, 0.0,/*center*/
@@ -201,8 +207,29 @@ void GLWidget::setZRotation(int angle){
     }
 }
 
+void getOpenglCoordinates(int x,int y){
+    GLint viewport[4];
+    GLdouble modelview[16];
+    GLdouble projection[16];
+    GLfloat winX, winY, winZ;
+    GLdouble posX, posY, posZ;
+
+    glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
+    glGetDoublev( GL_PROJECTION_MATRIX, projection );
+    glGetIntegerv( GL_VIEWPORT, viewport );
+
+    winX = (float)x;
+    winY = (float)viewport[3] - (float)y;
+    glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ );
+
+    gluUnProject( winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+    cout<<posX<<","<<posY<<","<<posZ<<endl;
+}
+
+
 void GLWidget::mousePressEvent(QMouseEvent *event){
     lastPos = event->pos();
+    //getOpenglCoordinates(lastPos.x(),lastPos.y());
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event){
@@ -249,7 +276,8 @@ void GLWidget::clearData(){
     zRot = 0;
     zoomfactor = 1.0;
     scale = 1.0;
-    objectColor.clear();
-
+    //objectColor.clear();
 }
+
+
 

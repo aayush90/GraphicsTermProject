@@ -32,6 +32,10 @@ private slots:
 
     void on_browseButton_clicked();
 
+    void on_spotlight_enable_toggled(bool checked);
+
+    void on_disableLight_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     VoxelMerge voxelMergeModel;

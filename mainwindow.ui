@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1197</width>
-    <height>804</height>
+    <width>1224</width>
+    <height>876</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,17 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_5">
-    <item row="2" column="0" colspan="2">
-     <widget class="GLWidget" name="openglWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" colspan="2">
+    <item row="0" column="2">
      <widget class="QGroupBox" name="lightPosition">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -37,20 +27,6 @@
        <string>Light Position</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="light_xlabel">
-         <property name="text">
-          <string>X</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="light_xtext">
-         <property name="text">
-          <string>1.0</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="2">
         <widget class="QRadioButton" name="positionalLightEnable">
          <property name="text">
@@ -61,21 +37,14 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="light_ylabel">
-         <property name="text">
-          <string>Y</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" rowspan="2">
-        <widget class="QLineEdit" name="light_ytext">
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="light_xtext">
          <property name="text">
           <string>1.0</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="2" rowspan="2">
+       <item row="2" column="2">
         <widget class="QRadioButton" name="directionalLightEnable">
          <property name="text">
           <string>Directional</string>
@@ -85,17 +54,55 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="light_ztext">
+         <property name="text">
+          <string>1.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QRadioButton" name="spotlight_enable">
+         <property name="text">
+          <string>SpotLight</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <widget class="QLabel" name="light_zlabel">
          <property name="text">
           <string>Z</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="light_ztext">
+       <item row="1" column="0">
+        <widget class="QLabel" name="light_ylabel">
+         <property name="text">
+          <string>Y</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="light_ytext">
          <property name="text">
           <string>1.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="light_xlabel">
+         <property name="text">
+          <string>X</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QRadioButton" name="disableLight">
+         <property name="text">
+          <string>Disable Light</string>
          </property>
         </widget>
        </item>
@@ -114,6 +121,9 @@
        <string>Viewer Position</string>
       </property>
       <layout class="QFormLayout" name="formLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="viewer_xlabel">
          <property name="text">
@@ -162,7 +172,21 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="0" colspan="4">
+    <item row="0" column="3">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="browseButton">
+        <property name="text">
+         <string>BrowseFile</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputFileText"/>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
      <widget class="QGroupBox" name="lights">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -173,25 +197,22 @@
       <property name="title">
        <string>Lights </string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QGroupBox" name="diffused">
+        <widget class="QGroupBox" name="ambient">
          <property name="title">
-          <string>Diffused</string>
+          <string>Ambient</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
-           <widget class="QLabel" name="diffused_Rlabel">
+           <widget class="QLabel" name="ambient_Rlabel">
             <property name="text">
              <string>R</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QSlider" name="diffused_Rslider">
-            <property name="toolTip">
-             <string/>
-            </property>
+           <widget class="QSlider" name="ambient_Rslider">
             <property name="minimum">
              <number>1</number>
             </property>
@@ -202,7 +223,7 @@
              <number>1</number>
             </property>
             <property name="value">
-             <number>100</number>
+             <number>1</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -210,25 +231,19 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="diffused_Glabel">
+           <widget class="QLabel" name="ambient_Glabel">
             <property name="text">
              <string>G</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSlider" name="diffused_Gslider">
+           <widget class="QSlider" name="ambient_Gslider">
             <property name="minimum">
              <number>1</number>
             </property>
             <property name="maximum">
              <number>100</number>
-            </property>
-            <property name="value">
-             <number>100</number>
-            </property>
-            <property name="tracking">
-             <bool>false</bool>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -236,21 +251,25 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="diffused_Blabel">
+           <widget class="QLabel" name="ambient_Blabel">
             <property name="text">
              <string>B</string>
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="ambient_Alabel">
+            <property name="text">
+             <string>A</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1">
-           <widget class="QSlider" name="diffused_Bslider">
+           <widget class="QSlider" name="ambient_Bslider">
             <property name="minimum">
              <number>1</number>
             </property>
             <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="value">
              <number>100</number>
             </property>
             <property name="orientation">
@@ -258,15 +277,8 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="diffused_Alabel">
-            <property name="text">
-             <string>A</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="1">
-           <widget class="QSlider" name="diffused_Aslider">
+           <widget class="QSlider" name="ambient_Aslider">
             <property name="minimum">
              <number>1</number>
             </property>
@@ -282,7 +294,7 @@
            </widget>
           </item>
           <item row="4" column="0" colspan="2">
-           <widget class="QRadioButton" name="diffused_enable">
+           <widget class="QRadioButton" name="ambient_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -356,6 +368,13 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="specular_Alabel">
+            <property name="text">
+             <string>A</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1">
            <widget class="QSlider" name="specular_Bslider">
             <property name="minimum">
@@ -369,13 +388,6 @@
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="specular_Alabel">
-            <property name="text">
-             <string>A</string>
             </property>
            </widget>
           </item>
@@ -409,65 +421,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="spotlight">
+        <widget class="QGroupBox" name="diffused">
          <property name="title">
-          <string>SpotLight</string>
+          <string>Diffused</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="spot_xlabel">
-            <property name="text">
-             <string>X</string>
-            </property>
-           </widget>
-          </item>
+         <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="1">
-           <widget class="QLineEdit" name="spot_xtext">
-            <property name="inputMethodHints">
-             <set>Qt::ImhNone</set>
-            </property>
-            <property name="text">
-             <string>-1.0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="spot_ylabel">
-            <property name="text">
-             <string>Y</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="spot_ytext">
-            <property name="text">
-             <string>-1.0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="spot_zlabel">
-            <property name="text">
-             <string>Z</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="spot_ztext">
-            <property name="text">
-             <string>-1.0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QLabel" name="spot_cutoffLabel">
-            <property name="text">
-             <string>CutOff</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QSlider" name="spot_cutoffSlider">
+           <widget class="QSlider" name="diffused_Rslider">
             <property name="toolTip">
              <string/>
             </property>
@@ -481,86 +441,40 @@
              <number>1</number>
             </property>
             <property name="value">
-             <number>50</number>
+             <number>100</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="9" column="0" colspan="2">
-           <widget class="QLabel" name="spot_exponentLabel">
-            <property name="text">
-             <string>Exponent</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QLineEdit" name="spot_exponentText">
-            <property name="text">
-             <string>2.0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0" colspan="2">
-           <widget class="QRadioButton" name="spotlight_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="ambient">
-         <property name="title">
-          <string>Ambient</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
-           <widget class="QLabel" name="ambient_Rlabel">
+           <widget class="QLabel" name="diffused_Rlabel">
             <property name="text">
              <string>R</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QSlider" name="ambient_Rslider">
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="singleStep">
-             <number>1</number>
-            </property>
-            <property name="value">
-             <number>1</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="ambient_Glabel">
+           <widget class="QLabel" name="diffused_Glabel">
             <property name="text">
              <string>G</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSlider" name="ambient_Gslider">
+           <widget class="QSlider" name="diffused_Gslider">
             <property name="minimum">
              <number>1</number>
             </property>
             <property name="maximum">
              <number>100</number>
+            </property>
+            <property name="value">
+             <number>100</number>
+            </property>
+            <property name="tracking">
+             <bool>false</bool>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -568,18 +482,28 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="ambient_Blabel">
+           <widget class="QLabel" name="diffused_Blabel">
             <property name="text">
              <string>B</string>
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="diffused_Alabel">
+            <property name="text">
+             <string>A</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1">
-           <widget class="QSlider" name="ambient_Bslider">
+           <widget class="QSlider" name="diffused_Bslider">
             <property name="minimum">
              <number>1</number>
             </property>
             <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="value">
              <number>100</number>
             </property>
             <property name="orientation">
@@ -587,15 +511,8 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="ambient_Alabel">
-            <property name="text">
-             <string>A</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="1">
-           <widget class="QSlider" name="ambient_Aslider">
+           <widget class="QSlider" name="diffused_Aslider">
             <property name="minimum">
              <number>1</number>
             </property>
@@ -611,7 +528,7 @@
            </widget>
           </item>
           <item row="4" column="0" colspan="2">
-           <widget class="QRadioButton" name="ambient_enable">
+           <widget class="QRadioButton" name="diffused_enable">
             <property name="text">
              <string>Enable</string>
             </property>
@@ -626,21 +543,104 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="3">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="browseButton">
-        <property name="text">
-         <string>BrowseFile</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="inputFileText"/>
-      </item>
-     </layout>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="spotlight">
+      <property name="title">
+       <string>SpotLight</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QLabel" name="spot_xlabel">
+         <property name="text">
+          <string>X</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="spot_xtext">
+         <property name="inputMethodHints">
+          <set>Qt::ImhNone</set>
+         </property>
+         <property name="text">
+          <string>-1.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="spot_ylabel">
+         <property name="text">
+          <string>Y</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="spot_ytext">
+         <property name="text">
+          <string>-1.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="spot_zlabel">
+         <property name="text">
+          <string>Z</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="spot_ztext">
+         <property name="text">
+          <string>-1.0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="spot_cutoffLabel">
+         <property name="text">
+          <string>CutOff</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSlider" name="spot_cutoffSlider">
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>50</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="spot_exponentLabel">
+         <property name="text">
+          <string>Exponent</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="spot_exponentText">
+         <property name="text">
+          <string>2.0</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
-    <item row="2" column="2" colspan="2">
+    <item row="0" column="4">
      <widget class="QDialogButtonBox" name="ok">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -650,6 +650,16 @@
       </property>
       <property name="standardButtons">
        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="4">
+     <widget class="GLWidget" name="openglWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
      </widget>
     </item>
