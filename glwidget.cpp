@@ -77,10 +77,10 @@ void GLWidget::initializeGL(){
     qglClearColor (Qt::black);
     glShadeModel (GL_SMOOTH);
 
-
+    glLightf(GL_LIGHT0,GL_SPOT_CUTOFF,180.0);
+    glLightf(GL_LIGHT0,GL_SPOT_EXPONENT,0.0);
     /*Spot Light*/
     if(this->isSpotlight){
-        cout<<"yes\n";
         glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION,this->spotDirection);
         glLightf(GL_LIGHT0,GL_SPOT_CUTOFF,this->spotCutOff);
         glLightf(GL_LIGHT0,GL_SPOT_EXPONENT,this->spotExponent);
