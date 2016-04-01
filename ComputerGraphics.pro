@@ -14,12 +14,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    illuminationmodel.cpp \
     glwidget.cpp \
     voxelmerge.cpp
 
 HEADERS  += mainwindow.h \
-    illuminationmodel.h \
     glwidget.h \
     voxelmerge.h
 
